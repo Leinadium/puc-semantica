@@ -1,0 +1,6 @@
+def TRUE = \x.\y. x
+def FALSE = \x.\y. y
+def IF = \c.\t.\e. c t e
+def OR = \p.\q. p p q
+def AND = \p.\q. p q p
+def NOT = \p. p FALSE TRUE

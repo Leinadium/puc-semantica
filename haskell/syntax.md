@@ -81,4 +81,13 @@ qsort (x:xs) = qsort [y | y <- xs, y <= x] ++ [x] ++ qsort [y | y <- xs, y > x]
 qsort2 :: [Integer] -> [Integer]
 qsort2 [] = []
 qsort2 (x:xs) = qsort2 (filter (<= x) xs) ++ [x] ++ qsort2 (filter (> x) xs)
+
+-- reverse
+reverse :: [a] -> [a]
+reverse [] = []
+reverse (x:xs) = (reverse xs) ++ [x]
+
+-- slice - truque de haskell
+-- ((+) 1) === (+ 1)
+
 ```

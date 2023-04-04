@@ -90,4 +90,33 @@ reverse (x:xs) = (reverse xs) ++ [x]
 -- slice - truque de haskell
 -- ((+) 1) === (+ 1)
 
+
+-- sublistas
+sub1 :: [a] -> [[a]]
+sub1 [] = [[]]
+sub1 (x:xs) = map (x:) s ++ s
+    where s = sub1 xs
+
+-- combinatoria
+comb :: [a] -> Integer -> [[a]]
+comb xs 0 = [[]]
+comb [] n = []
+comb (x:xs) n = map(x:) comb xs (n-1)  ++ comb xs n
+
+-- permutacao
+
+-- insere a na posicao x
+insert :: a -> Integer -> [a] -> [a]
+insert x 0 ys = x:ys
+insert x n (y:ys) = y : insert x (n-1) ys
+
+perm :: [a] -> [[a]]
+perm [] = [[]]
+perm (x:xs) = concat (map aux ++ (perm xs))
+    where aux ys = map aux' [0..length ys]
+        where aux' i = insert x i ys
+-- outra forma
+perm (x:xs) = [insert i ys | ys <- perm xs, i <- [0..length xs]]
+
+
 ```

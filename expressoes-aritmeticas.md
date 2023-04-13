@@ -64,4 +64,10 @@ eval (Um e) = fmap negate (eval e)
 -- bind :: (a -> Maybe b) -> Maybe a -> Maybe b
 bind2 :: (a -> b -> Maybe c) -> Maybe a -> Maybe b -> Maybe c
 bind2 op ma mb = bind (\a -> bind (op) a mb) ma
+
+-- composicao dupla
+comp2 :: (c -> d) -> (a -> b -> c) -> a -> b -> d
+comp2 f g x y = f (g x y)
+-- ou
+comp2 = (.) (.) (.)
 ```

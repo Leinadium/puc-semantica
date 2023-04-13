@@ -36,7 +36,7 @@ Passo indutivo: Seja x:xs
               = (g . f) x : map (g . f) xs
               = g (f x) : map (g . f) xs
       (HI)  === g (f x) : map g . map f xs
-              = g (f x) : 
+              = g (f x) : map g (map f xs)
 
         (2) --> (map g . map f) x:xs
               = map g (map f x:xs)

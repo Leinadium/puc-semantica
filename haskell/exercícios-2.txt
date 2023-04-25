@@ -1,0 +1,23 @@
+Nos dois exercícios a seguir, escreva apenas o código extra e as
+mudanças necessárias no código original (mais ou menos como se fosse
+um 'diff').  Use os números de linha para indicar onde as mudanças se
+encaixam no código original.
+
+
+1. No interpretador "Simple Imperative Language" [1], acrescente um
+comando de atribuição múltipla: na sintaxe, esse comando é composto
+de uma lista de variáveis e uma lista de expressões. Na semântica,
+ele atribui o valor de cada expressão à variável correspondente.
+(Escreva uma função auxiliar para fazer a recursão sobre as listas.)
+Decida o que fazer caso as listas tenham tamanhos diferentes.
+
+
+2. No interpretador "Imperative Language CPS" [2], acrescente um comando
+"repeat-until", que repete um bloco de código até uma condição ser
+verdadeira. O teste no "repeat-until" é feito no final, logo o bloco
+é sempre executado ao menos uma vez.
+
+
+[1] http://www.inf.puc-rio.br/~roberto/sem/imper.hs.html
+
+[2] http://www.inf.puc-rio.br/~roberto/sem/imper-cont.hs.html

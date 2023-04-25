@@ -1,6 +1,3 @@
-# Linguagem Interpretada Simples
-
-```haskell
 -- nova definicao de exp
 data Exp = EConst Integer
          | EAdd Exp Exp
@@ -49,4 +46,7 @@ query m var = m var
 
 update :: Mem -> String -> Integer -> Mem
 update m var n = \var' -> if var' == var then n else m var'
-```
+
+
+-- main loop
+main = print (query (evalCmd prog emptyMem) "result")

@@ -20,7 +20,7 @@ evalAttr [] [] m = m
 evalAttr [] e:es m = m
 evalAttr v:vs [] m = m
 evalAttr v:vs e:es m = update v (evalExp e m) (evalAttr vs es m)
-evalAttr v:vs e:es m = evalAttr vs es (update v (evalExp e m) m )
+evalAttr v:vs e:es m = evalAttr vs es (update v (evalExp e m) m)    -- outra opção
 
 evalCmd (CmdAsg vs es) m = evalAttr(vs es m)
 ```

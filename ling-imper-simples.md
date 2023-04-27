@@ -1,4 +1,4 @@
-# Linguagem Interpretada Simples
+# Linguagem Imperativa Simples
 
 ```haskell
 -- nova definicao de exp

@@ -17,12 +17,12 @@ data Cmd = CmdAsg [Var] [Exp]       -- linha 55
 -- novas linhas
 evalAttr :: [Var] -> [Exp] -> Mem -> Mem
 evalAttr [] [] m = m
-evalAttr [] e:es m = m
-evalAttr v:vs [] m = m
-evalAttr v:vs e:es m = update v (evalExp e m) (evalAttr vs es m)
-evalAttr v:vs e:es m = evalAttr vs es (update v (evalExp e m) m)    -- outra opção
+evalAttr [] (e:es) m = m
+evalAttr (v:vs) [] m = m
+evalAttr (v:vs) (e:es) m = update v (evalExp e m) (evalAttr vs es m)
+evalAttr (v:vs) (e:es) m = evalAttr vs es (update v (evalExp e m) m)    -- outra opção
 
-evalCmd (CmdAsg vs es) m = evalAttr(vs es m)
+evalCmd (CmdAsg vs es) m = evalAttr vs es m
 ```
 
 ## Parte 2
@@ -37,7 +37,4 @@ data Cmd = -- ...
          | CmdRepeat Exp Cmd    -- linha 80
 
 evalCmd (CmdRepeat e c) m k = evalCmd(CmdSeq c (CmdWhile (ExpNot e) c)) m k  -- linha 92
-
-
-
 ```

@@ -25,7 +25,7 @@ putString [] = return ()
 putString (x:xs) = putChar x >>= (\_ -> putString xs)
 
 -- getChar e getString
-getChat :: IO Char
+getChar :: IO Char
 getLine :: IO String
 getLine = getChar >>= 
     (\c -> if c == '\n' then return "" 

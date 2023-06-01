@@ -10,18 +10,14 @@ bind (unit x) f
 
 -- aplicando a definicao de unit
 bind (\m -> (x, m)) f
-
 -- aplicando a definicao de bind
 \m -> let (a, m') = (\n -> (x, n)) m    
-    in f a m'
-    
+    in f a m'  
 -- aplicando o lambda dentro do let
 \m -> let (a, m') = (x, m) 
     in f a m'
-
 -- resolvendo o let
 \m -> f x m        
-
 -- conversão eta
 f x
 
@@ -42,19 +38,15 @@ bind m unit
 -- desenvolvendo o bind
 \n -> let (a, m') = m n in 
     unit a m' 
-
 -- desenvolvendo o unit
 \n -> let (a, m') = m n in
     (\m -> (a, m)) m'
-
 -- aplicando o lambda gerado do unit
 \n -> let (a, m') = m n in
     (a, m')
-
 -- o let esta escrito como se fosse let A = B in A.
 -- parecido com uma transição eta... poderia escrever B direto
 \n -> m n
-
 -- transicao eta, removendo o n
 m
 

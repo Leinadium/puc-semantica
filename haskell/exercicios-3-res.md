@@ -87,12 +87,6 @@ let (a, m') = (let (a', m'') = m k in g a' m'') in h a m'
 let (a, m') = (let (a', m'') = (A, k') in g a' m'') in h a m'
 -- quebrando o let interno
 let (a, m') = g A k' in h a m'
--- desenvolvendo o (g A) de acordo com a regra acima
-let (a, m') = A' k' in h a m'
--- desenvolvendo o (A' k') de acordo com a regra acima
-let (a, m') = (B, k'') in h a m'
--- quebrando o let
-h B k''
 
 
 -- lado direito
@@ -111,56 +105,6 @@ bind (g A) h k'
 (\n -> let (a, m') = (g A) n in h a m') k'
 -- aplicando o k' no lambda
 let (a, m') = (g A) k' in h a m'
--- desenvolvendo o (g A) de acordo com a regra acima
-let (a, m') = A' k' in h a m'
--- desenvolvendo o (A' k') de acordo com a regra acima
-let (a, m') = (B, k'') in h a m'
--- quebrando o let
-h B k'' 
-
 
 -- provado
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- desenvolvendo o bind de fora
-(\n -> let (a, m') = (bind m g) n in
-    h a m') k
--- aplicando o k
-let (a, m') = (bind m g) k in
-    h a m'
--- desenolvendo o bind
-let (a, m') = (\n -> let (a, m') = m n in (g a m')) k in h a m'
--- aplicando o k no lambda de dentro
-let (a, m') = (let (a', m'') = m k in (g a m')) in h a' m''
--- parando aqui, nao da pra continuar
-
--- lado direito agora
-bind m (\x -> bind (g x) h) k
--- desenvolvendo o bind de fora
-(\n -> let (a, m') = m n in
-    (\x -> bind (g x) h) a m') k
--- aplicando o k
-let (a, m') = m k in
-    (\x -> bind (g x) h) a m'
--- aplicando o a no lambda
-let (a, m') = m k in
-    bind (g a) h m'
--- aplicando o bind
-let (a, m') = m k in 
-    (\n -> let (a, m'') = (g a) n in h a m'') m'
--- aplicando o m' no lambda
-let (a, m') = m k in let (a, m') = (g a) m' in h a m'
 ```

@@ -78,4 +78,66 @@ many1 :: Parser a -> Parser [a]
 many1 p = do  x <- p
              xs <- many p
              return (x:xs)
+
+
+-- sp (pula os espacos em brancos, continuando a partir do ultimo)
+import Data.Char
+sp :: Parser ()
+sp = many (sat isSpace) >> return ()
+
+-- char (verifica se o proximo eh um caracter especifico)
+char :: Char -> Parser Char
+char c = sat (== c)
+
+-- string (verifica se o proximo eh uma string especifica)
+string :: String -> Parser String
+string [] = sp
+string (c:cs) = char c >> string cs
+
+-- exemplo de match num "nome"
+name :: Parser String
+name = do c  <- sat isAlpha
+          cs <- many (sat isAlphaNum)
+          sp
+          return (c:cs)
+
+```
+
+## Parser de uma expressão
+
+```haskell
+-- queremos um parser para as nossas expressoes
+data Exp = ExpK Integer | ExpAdd Exp Exp -- ...
+
+-- ExpK
+p_int :: Parser String 
+p_int = do n <- many1 (sat isDigit)
+           sp
+           return ExpK (read n)     -- read: transforma uma string para inteiro
+
+-- ExpVar
+p_var :: Parser Exp
+p_var = do n <- name 
+           if (elem n rw) then fail ""
+           else
+           return ExpVar n
+    where rw = ["if", "then", "else", "let", "in"]
+
+-- Ve o parenteses
+p_var :: Parser Exp
+p_par = do string "("
+           e <- p_exp
+           string ")"
+           return e
+
+-- uma expressao primária
+p_primary = p_int `orelse` p_var `orelse` p_par
+
+-- aplicação
+p_app :: Parser Exp
+p_app = do lp <- many1 p_primary
+           return foldl1 ExpApp lp
+
+
+
 ```

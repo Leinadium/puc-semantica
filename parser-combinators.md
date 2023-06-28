@@ -130,8 +130,8 @@ p_par = do string "("
            string ")"
            return e
 
--- uma expressao primária
-p_primary = p_int `orelse` p_var `orelse` p_par
+-- uma expressao primária (inteiro ou variavel ou parenteses)
+-- p_primary = p_int `orelse` p_var `orelse` p_par
 
 -- aplicação
 p_app :: Parser Exp
@@ -139,5 +139,58 @@ p_app = do lp <- many1 p_primary
            return foldl1 ExpApp lp
 
 
+-- um parser que aceita várias strings
+strings :: [String] -> Parser String
+strings [] = fail ""
+strings (x:xs) = (string x >> return x) `orelse` strings xs
+
+-- um parser pra pares
+pairs :: Parser a -> Parser b -> Parser (a, b)
+pairs pa pb = do a <- pa
+                 b <- pb
+                 return (a, b)
+
+
+-- e_mul = primary (mulOp primary)*
+-- e_add = e_mul (addOp e_mul)
+-- e_comp = e_add (compOp e_add)
+-- e_mul = binExp primary mulOp
+
+-- uma expressão binaria
+-- por exemplo, e_mul = binExp primary ["*", "/", "%"]
+binExp :: Parser Exp -> [String] -> Parser Exp
+binExp p ops = do e <- p
+                  es <- many (pair (strings ops))
+                  return buildBinExp e es
+
+
+buildBinExp :: Exp -> [(String, Exp)] -> Exp
+buildBinExp e l = foldl f e l
+    where f e (op, e') = (binOp) e e'
+          bindOp "+" = ExpAdd
+          bindOp "-" = ExpSub
+          -- ...
+
+
+p_if :: Parser Exp
+p_if = do string "if"
+          c <- p_exp
+          string "then"
+          tl <- p_exp
+          string "else"
+          el <- p_exp
+          return (ExpIf c th el)
+
+
+p_lambda :: Parser Exp
+p_lambda = do string "\\"
+           var <- name
+           string "->"
+           body <- p_exp
+           return (ExpLambda var body)
+
+
+p_exp :: Parser Exp
+p_exp = sp >> (p_if `orelse` p_lambda `orelse` p_let `orelse` p_arith)
 
 ```
